@@ -1,0 +1,76 @@
+<div class="user-view">
+  <div class="user-view__header">
+    <div class="user-view__header__title">
+      <ng-container *ngIf="user; else noUser">
+        {{ user.username }}
+      </ng-container>
+      <ng-template #noUser>
+        Create new user
+      </ng-template>
+    </div>
+    <div (click)="close.emit()" class="user-view__header__close">
+      Close
+    </div>
+  </div>
+  <div class="user-view__body">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="input-group">
+        <label for="username" class="input-group__label">
+          Username
+        </label>
+        <input type="text" formControlName="username" class="input-group__input" id="username">
+      </div>
+      <div class="input-group">
+        <label for="first_name" class="input-group__label">
+          First name
+        </label>
+        <input type="text" formControlName="first_name" class="input-group__input" id="first_name">
+      </div>
+      <div class="input-group">
+        <label for="last_name" class="input-group__label">
+          Last name
+        </label>
+        <input type="text" formControlName="last_name" class="input-group__input" id="last_name">
+      </div>
+      <div class="input-group">
+        <label for="email" class="input-group__label">
+          Email
+        </label>
+        <input type="email" formControlName="email" class="input-group__input" id="email">
+      </div>
+      <div class="input-group">
+        <label for="user_type" class="input-group__label">
+          Type
+        </label>
+        <input type="text" formControlName="user_type" class="input-group__input" id="user_type">
+      </div>
+      <div class="input-group">
+        <label for="password" class="input-group__label">
+          Password
+        </label>
+        <input type="password" formControlName="password" class="input-group__input" id="password">
+      </div>
+      <div class="input-group">
+        <label for="repeat_password" class="input-group__label">
+          Repeat password
+        </label>
+        <input type="repeat_password" formControlName="repeat_password" class="input-group__input" id="repeat_password">
+      </div>
+      <div class="button-wrapper">
+        <ng-container *ngIf="user else noUserInterface">
+          <button (click)="onDelete()" type="button" class="btn btn-error">
+            Delete
+          </button>
+          <button (click)="onSave()" type="button" class="btn btn-general">
+            Save
+          </button>
+        </ng-container>
+        <ng-template #noUserInterface>
+          <button  class="btn btn-general" type="submit">
+            Create
+          </button>
+        </ng-template>
+      </div>
+    </form>
+  </div>
+</div>
