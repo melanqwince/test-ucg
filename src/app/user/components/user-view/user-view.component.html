@@ -1,8 +1,8 @@
 <div class="user-view">
   <div class="user-view__header">
     <div class="user-view__header__title">
-      <ng-container *ngIf="user; else noUser">
-        {{ user.username }}
+      <ng-container *ngIf="activeUser; else noUser">
+        {{ activeUser.username }}
       </ng-container>
       <ng-template #noUser>
         Create new user
@@ -19,6 +19,9 @@
           Username
         </label>
         <input type="text" formControlName="username" class="input-group__input" id="username">
+        <div *ngIf="form.get('username')!.hasError('uniqueUsernameError')">
+          This username is already taken.
+        </div>
       </div>
       <div class="input-group">
         <label for="first_name" class="input-group__label">
@@ -36,7 +39,10 @@
         <label for="email" class="input-group__label">
           Email
         </label>
-        <input type="email" formControlName="email" class="input-group__input" id="email">
+        <input emailValidator type="email" formControlName="email" class="input-group__input" id="email">
+        <div *ngIf="form.get('email')!.touched && form.get('email')!.hasError('emailError')">
+          Email error
+        </div>
       </div>
       <div class="input-group">
         <label for="user_type" class="input-group__label">
@@ -48,16 +54,22 @@
         <label for="password" class="input-group__label">
           Password
         </label>
-        <input type="password" formControlName="password" class="input-group__input" id="password">
+        <input passwordValidator type="password" formControlName="password" class="input-group__input" id="password">
+        <div *ngIf="form.get('password')!.touched && form.get('password')!.hasError('passwordError')">
+          Password error
+        </div>
       </div>
       <div class="input-group">
         <label for="repeat_password" class="input-group__label">
           Repeat password
         </label>
-        <input type="repeat_password" formControlName="repeat_password" class="input-group__input" id="repeat_password">
+        <input type="password" formControlName="repeat_password" class="input-group__input" id="repeat_password">
+        <div *ngIf="form.get('repeat_password')!.touched && form.get('repeat_password')!.hasError('passwordMismatch')">
+          Password repeat error
+        </div>
       </div>
       <div class="button-wrapper">
-        <ng-container *ngIf="user else noUserInterface">
+        <ng-container *ngIf="activeUser else noUserInterface">
           <button (click)="onDelete()" type="button" class="btn btn-error">
             Delete
           </button>
