@@ -19,8 +19,14 @@
           Username
         </label>
         <input type="text" formControlName="username" class="input-group__input" id="username">
-        <div *ngIf="form.get('username')!.hasError('uniqueUsernameError')">
+        <div class="input-group__error" *ngIf="form.get('username')!.touched && form.get('username')!.hasError('required')">
+          Username is required.
+        </div>
+        <div class="input-group__error" *ngIf="form.get('username')!.hasError('uniqueUsernameError')">
           This username is already taken.
+        </div>
+        <div class="input-group__error" *ngIf="serverErrors?.username">
+          {{ serverErrors.username }}
         </div>
       </div>
       <div class="input-group">
@@ -28,38 +34,62 @@
           First name
         </label>
         <input type="text" formControlName="first_name" class="input-group__input" id="first_name">
+        <div class="input-group__error" *ngIf="form.get('first_name')!.touched && form.get('first_name')!.hasError('required')">
+          First name is required.
+        </div>
+        <div class="input-group__error" *ngIf="serverErrors?.first_name">
+          {{ serverErrors.first_name }}
+        </div>
       </div>
       <div class="input-group">
         <label for="last_name" class="input-group__label">
           Last name
         </label>
         <input type="text" formControlName="last_name" class="input-group__input" id="last_name">
+        <div class="input-group__error" *ngIf="form.get('last_name')!.touched && form.get('last_name')!.hasError('required')">
+          Last name is required.
+        </div>
+        <div class="input-group__error" *ngIf="serverErrors?.last_name">
+          {{ serverErrors.last_name }}
+        </div>
       </div>
       <div class="input-group">
         <label for="email" class="input-group__label">
           Email
         </label>
-        <div *ngIf="serverErrors?.email">
-          {{ serverErrors.email }}
-        </div>
         <input emailValidator type="email" formControlName="email" class="input-group__input" id="email">
+        <div class="input-group__error" *ngIf="form.get('email')!.touched && form.get('email')!.hasError('required')">
+          Email is required.
+        </div>
         <div *ngIf="form.get('email')!.touched && form.get('email')!.hasError('emailError')">
           Email error
+        </div>
+        <div *ngIf="serverErrors?.email">
+          {{ serverErrors.email }}
         </div>
       </div>
       <div class="input-group">
         <label for="user_type" class="input-group__label">
           Type
         </label>
-        <input type="text" formControlName="user_type" class="input-group__input" id="user_type">
+        <select name="user_type" formControlName="user_type" id="user_type">
+          <option value="Admin">Admin</option>
+          <option value="Driver">Driver</option>
+        </select>
+        <div *ngIf="form.get('user_type')!.touched && form.get('user_type')!.hasError('required')">
+          User type is required
+        </div>
       </div>
       <div class="input-group">
         <label for="password" class="input-group__label">
           Password
         </label>
         <input passwordValidator type="password" formControlName="password" class="input-group__input" id="password">
+        <div *ngIf="form.get('password')!.touched && form.get('password')!.hasError('required')">
+          Password is required
+        </div>
         <div *ngIf="form.get('password')!.touched && form.get('password')!.hasError('passwordError')">
-          Password error
+          Password must have minimum length 8 and have at least one number and one letter.
         </div>
       </div>
       <div class="input-group">
@@ -67,8 +97,11 @@
           Repeat password
         </label>
         <input type="password" formControlName="repeat_password" class="input-group__input" id="repeat_password">
+        <div *ngIf="form.get('repeat_password')!.touched && form.get('repeat_password')!.hasError('required')">
+          Repeat password is required.
+        </div>
         <div *ngIf="form.get('repeat_password')!.touched && form.get('repeat_password')!.hasError('passwordMismatch')">
-          Password repeat error
+          Passwords don't match.
         </div>
       </div>
       <div class="button-wrapper">
@@ -76,12 +109,12 @@
           <button (click)="onDelete()" type="button" class="btn btn-error">
             Delete
           </button>
-          <button (click)="onSave()" type="button" class="btn btn-general">
+          <button [disabled]="form.invalid" (click)="onSave()" type="button" class="btn btn-general">
             Save
           </button>
         </ng-container>
         <ng-template #noUserInterface>
-          <button  class="btn btn-general" type="submit">
+          <button [disabled]="form.invalid" class="btn btn-general" type="submit">
             Create
           </button>
         </ng-template>

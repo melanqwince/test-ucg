@@ -5,7 +5,11 @@ export function matchPasswordValidator(passwordKey: string, confirmPasswordKey: 
     const password = control.get(passwordKey)?.value;
     const confirmPassword = control.get(confirmPasswordKey)?.value;
 
-    if (password !== confirmPassword) {
+    if (!confirmPassword) {
+      control.get(confirmPasswordKey)?.setErrors({ required: true })
+    }
+
+    if (confirmPassword && password !== confirmPassword) {
       control.get(confirmPasswordKey)?.setErrors({ passwordMismatch: true })
       return { passwordMismatch: true };
     }

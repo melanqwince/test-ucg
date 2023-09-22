@@ -46,7 +46,9 @@ export class UserViewComponent implements OnChanges {
       const userCopy = {...this.activeUser, repeat_password: this.activeUser!.password};
       delete userCopy.old_username
       this.form.setValue(userCopy);
-      this.form.get('username')?.setValidators([Validators.required, uniqueUsernameValidator([ ...this.users.filter((u) => u.username !== this.activeUser?.username) ])])
+      const filteredUsers = [...this.users.filter((u) => u.username !== this.activeUser?.username)];
+      this.form.get('username')?.setValidators([Validators.required, uniqueUsernameValidator(filteredUsers)])
+      this.form.get('username')?.updateValueAndValidity();
     }
 
     if (change['activeUser'] && !change['activeUser'].currentValue) {

@@ -1,6 +1,7 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UsersService } from "../../services/users.service";
 import { User } from "../../models/user.interface";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: 'app-user-list',
@@ -12,7 +13,7 @@ export class UserListComponent implements OnInit {
   public activeUser: User | null = null;
   public isUserViewOpened: boolean = false;
   public serverErrors: any;
-  constructor(private cdr: ChangeDetectorRef, private userService: UsersService) {}
+  constructor(private toastr: ToastrService, private userService: UsersService) {}
 
   ngOnInit() {
     this.userService.getUsers().subscribe((res: any) => {
@@ -42,14 +43,13 @@ export class UserListComponent implements OnInit {
 
   serverSaveUsers() {
     this.userService.saveUsers(this.users).subscribe((res) => {
-      console.log('Server saved users')
+      this.toastr.success('Users saved', 'Success');
       this.isUserViewOpened = false;
       this.serverErrors = null;
       this.activeUser = null;
     }, (err) => {
       this.serverErrors = err.errors;
-
-      console.error('Error on saving')
+      this.toastr.error('Users not saved', 'Error');
     })
   }
 }

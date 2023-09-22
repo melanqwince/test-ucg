@@ -6,7 +6,8 @@ import { UsersService } from "./services/users.service";
 import { ReactiveFormsModule } from "@angular/forms";
 import { EmailValidatorDirective } from "./directives/email-validator-reactive.directive";
 import { PasswordValidatorReactiveDirective } from "./directives/password-validator-reactive.directive";
-
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 
 @NgModule({
@@ -18,7 +19,9 @@ import { PasswordValidatorReactiveDirective } from "./directives/password-valida
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [UsersService]
 })
