@@ -33,6 +33,15 @@
               "src/styles.scss",
               "node_modules/ngx-toastr/toastr.css"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                ".",
+                "./src/styles",
+                "./src/styles/base",
+                "./src/styles/layouts",
+                "./src/styles/partials"
+              ]
+            },
             "scripts": []
           },
           "configurations": {

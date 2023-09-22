@@ -43,10 +43,12 @@ export class UserListComponent implements OnInit {
 
   serverSaveUsers() {
     this.userService.saveUsers(this.users).subscribe((res) => {
-      this.toastr.success('Users saved', 'Success');
-      this.isUserViewOpened = false;
-      this.serverErrors = null;
-      this.activeUser = null;
+      if (res.status) {
+        this.toastr.success('Users saved', 'Success');
+        this.isUserViewOpened = false;
+        this.serverErrors = null;
+        this.activeUser = null;
+      }
     }, (err) => {
       this.serverErrors = err.errors;
       this.toastr.error('Users not saved', 'Error');

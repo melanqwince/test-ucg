@@ -9,14 +9,15 @@
       </ng-template>
     </div>
     <div (click)="close.emit()" class="user-view__header__close">
-      Close
+      <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="m19 6.41-1.41-1.41-5.59 5.59-5.59-5.59-1.41 1.41 5.59 5.59-5.59 5.59 1.41 1.41 5.59-5.59 5.59 5.59 1.41-1.41-5.59-5.59z" fill="#a4a4b5"/><path d="m0 0h24v24h-24z" fill="none"/></svg>
     </div>
   </div>
   <div class="user-view__body">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <div class="input-group">
+      <div class="input-group" [class.input-group--error]="form.get('username')!.touched && form.get('username')!.hasError('required') ||
+form.get('username')!.hasError('uniqueUsernameError') || serverErrors?.username">
         <label for="username" class="input-group__label">
-          Username
+          Username<sup>*</sup>
         </label>
         <input type="text" formControlName="username" class="input-group__input" id="username">
         <div class="input-group__error" *ngIf="form.get('username')!.touched && form.get('username')!.hasError('required')">
@@ -29,9 +30,9 @@
           {{ serverErrors.username }}
         </div>
       </div>
-      <div class="input-group">
+      <div class="input-group" [class.input-group--error]="form.get('first_name')!.touched && form.get('first_name')!.hasError('required') || serverErrors?.first_name">
         <label for="first_name" class="input-group__label">
-          First name
+          First name<sup>*</sup>
         </label>
         <input type="text" formControlName="first_name" class="input-group__input" id="first_name">
         <div class="input-group__error" *ngIf="form.get('first_name')!.touched && form.get('first_name')!.hasError('required')">
@@ -41,9 +42,9 @@
           {{ serverErrors.first_name }}
         </div>
       </div>
-      <div class="input-group">
+      <div class="input-group" [class.input-group--error]="form.get('last_name')!.touched && form.get('last_name')!.hasError('required') || serverErrors?.last_name">
         <label for="last_name" class="input-group__label">
-          Last name
+          Last name<sup>*</sup>
         </label>
         <input type="text" formControlName="last_name" class="input-group__input" id="last_name">
         <div class="input-group__error" *ngIf="form.get('last_name')!.touched && form.get('last_name')!.hasError('required')">
@@ -53,68 +54,73 @@
           {{ serverErrors.last_name }}
         </div>
       </div>
-      <div class="input-group">
+      <div class="input-group" [class.input-group--error]="form.get('email')!.touched && form.get('email')!.hasError('required') || form.get('email')!.touched && form.get('email')!.hasError('emailError') || serverErrors?.email">
         <label for="email" class="input-group__label">
-          Email
+          Email<sup>*</sup>
         </label>
-        <input emailValidator type="email" formControlName="email" class="input-group__input" id="email">
+        <input emailValidator type="email" formControlName="email" class="input-group__input input-group__input--email" id="email">
         <div class="input-group__error" *ngIf="form.get('email')!.touched && form.get('email')!.hasError('required')">
           Email is required.
         </div>
-        <div *ngIf="form.get('email')!.touched && form.get('email')!.hasError('emailError')">
-          Email error
+        <div class="input-group__error" *ngIf="form.get('email')!.touched && form.get('email')!.hasError('emailError')">
+          Email is not valid.
         </div>
-        <div *ngIf="serverErrors?.email">
+        <div class="input-group__error" *ngIf="serverErrors?.email">
           {{ serverErrors.email }}
         </div>
       </div>
-      <div class="input-group">
+      <div class="input-group" [class.input-group--error]="form.get('user_type')!.touched && form.get('user_type')!.hasError('required')">
         <label for="user_type" class="input-group__label">
-          Type
+          Type<sup>*</sup>
         </label>
-        <select name="user_type" formControlName="user_type" id="user_type">
+        <select name="user_type" class="input-group__input input-group__input--select" formControlName="user_type" id="user_type">
           <option value="Admin">Admin</option>
           <option value="Driver">Driver</option>
         </select>
-        <div *ngIf="form.get('user_type')!.touched && form.get('user_type')!.hasError('required')">
+        <div class="input-group__error" *ngIf="form.get('user_type')!.touched && form.get('user_type')!.hasError('required')">
           User type is required
         </div>
       </div>
-      <div class="input-group">
+      <div class="input-group" [class.input-group--error]="form.get('password')!.touched && form.get('password')!.hasError('required') ||
+      form.get('password')!.touched && form.get('password')!.hasError('passwordError') || serverErrors?.password">
         <label for="password" class="input-group__label">
-          Password
+          Password<sup>*</sup>
         </label>
         <input passwordValidator type="password" formControlName="password" class="input-group__input" id="password">
-        <div *ngIf="form.get('password')!.touched && form.get('password')!.hasError('required')">
+        <div class="input-group__error" *ngIf="form.get('password')!.touched && form.get('password')!.hasError('required')">
           Password is required
         </div>
-        <div *ngIf="form.get('password')!.touched && form.get('password')!.hasError('passwordError')">
+        <div class="input-group__error" *ngIf="form.get('password')!.touched && form.get('password')!.hasError('passwordError')">
           Password must have minimum length 8 and have at least one number and one letter.
         </div>
+        <div class="input-group__error" *ngIf="serverErrors?.password">
+          {{ serverErrors.password }}
+        </div>
       </div>
-      <div class="input-group">
+      <div class="input-group" [class.input-group--error]="form.get('repeat_password')!.touched && form.get('repeat_password')!.hasError('required') ||
+form.get('repeat_password')!.touched && form.get('repeat_password')!.hasError('passwordMismatch')">
         <label for="repeat_password" class="input-group__label">
-          Repeat password
+          Repeat password<sup>*</sup>
         </label>
         <input type="password" formControlName="repeat_password" class="input-group__input" id="repeat_password">
-        <div *ngIf="form.get('repeat_password')!.touched && form.get('repeat_password')!.hasError('required')">
+        <div class="input-group__error" *ngIf="form.get('repeat_password')!.touched && form.get('repeat_password')!.hasError('required')">
           Repeat password is required.
         </div>
-        <div *ngIf="form.get('repeat_password')!.touched && form.get('repeat_password')!.hasError('passwordMismatch')">
+        <div class="input-group__error" *ngIf="form.get('repeat_password')!.touched && form.get('repeat_password')!.hasError('passwordMismatch')">
           Passwords don't match.
         </div>
       </div>
-      <div class="button-wrapper">
+      <div class="buttons-wrapper" [class.buttons-wrapper--several]="activeUser">
         <ng-container *ngIf="activeUser else noUserInterface">
-          <button (click)="onDelete()" type="button" class="btn btn-error">
+          <button (click)="onDelete()" type="button" class="btn btn--error">
             Delete
           </button>
-          <button [disabled]="form.invalid" (click)="onSave()" type="button" class="btn btn-general">
+          <button [disabled]="form.invalid" (click)="onSave()" type="button" class="btn btn--general">
             Save
           </button>
         </ng-container>
         <ng-template #noUserInterface>
-          <button [disabled]="form.invalid" class="btn btn-general" type="submit">
+          <button [disabled]="form.invalid" class="btn btn--general" type="submit">
             Create
           </button>
         </ng-template>

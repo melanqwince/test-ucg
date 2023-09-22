@@ -1,6 +1,31 @@
-:host {
+@import "vars";
+
+.content {
   display: flex;
-  table {
-    margin-right: 50px;
+  padding: 46px;
+
+  &__general {
+    width: 100%;
+    max-width: 65%;
+
+    .button-wrapper {
+      text-align: right;
+      margin-bottom: 16px;
+    }
   }
+
+  &__user-view {
+    margin-top: 62px;
+    margin-left: 26px;
+    width: 100%;
+    max-width: 35%;
+  }
+}
+
+.table-wrapper {
+  width: 100%;
+  background-color: $c-white;
+  border-radius: 6px;
+  box-shadow: $shadow-primary;
+  padding-bottom: 78px;
 }
