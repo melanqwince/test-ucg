@@ -6,7 +6,7 @@
 
   &__general {
     width: 100%;
-    max-width: 65%;
+    max-width: calc(100% - 596px);
 
     .button-wrapper {
       text-align: right;
@@ -18,7 +18,7 @@
     margin-top: 62px;
     margin-left: 26px;
     width: 100%;
-    max-width: 35%;
+    max-width: 596px;
   }
 }
 
@@ -28,4 +28,19 @@
   border-radius: 6px;
   box-shadow: $shadow-primary;
   padding-bottom: 78px;
+}
+
+@media(max-width: 1200px) {
+  .content {
+    flex-direction: column;
+
+    &__general {
+      max-width: 100%;
+    }
+
+    &__user-view {
+      margin-left: 0;
+      margin-top: 40px;
+    }
+  }
 }
