@@ -51,7 +51,7 @@ export class UserListComponent implements OnInit {
       }
     }, (err) => {
       this.serverErrors = err.errors;
-      this.toastr.error('Users not saved', 'Error');
+      this.toastr.error('Users not saved', 'Error', { positionClass: 'toast-top-left' });
     })
   }
 }
