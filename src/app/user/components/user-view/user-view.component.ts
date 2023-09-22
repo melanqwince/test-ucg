@@ -13,6 +13,7 @@ export class UserViewComponent implements OnChanges {
   public form!: FormGroup;
   @Input() activeUser: User | null = null;
   @Input() users!: User[];
+  @Input() serverErrors: any;
   @Output() add = new EventEmitter<User>;
   @Output() save = new EventEmitter<User>;
   @Output() delete = new EventEmitter<User>;

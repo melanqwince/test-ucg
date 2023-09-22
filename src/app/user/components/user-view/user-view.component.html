@@ -39,6 +39,9 @@
         <label for="email" class="input-group__label">
           Email
         </label>
+        <div *ngIf="serverErrors?.email">
+          {{ serverErrors.email }}
+        </div>
         <input emailValidator type="email" formControlName="email" class="input-group__input" id="email">
         <div *ngIf="form.get('email')!.touched && form.get('email')!.hasError('emailError')">
           Email error

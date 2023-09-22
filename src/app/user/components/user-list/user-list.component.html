@@ -1,6 +1,6 @@
 <div class="table-wrapper">
   <div class="button-wrapper">
-    <button class="btn btn-general" (click)="isUserViewOpened = true; activeUser = null;">Create user</button>
+    <button class="btn btn-general" (click)="isUserViewOpened = true; activeUser = null; serverErrors = null;">Create user</button>
   </div>
   <table>
     <thead>
@@ -23,7 +23,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr (click)="activeUser = user; isUserViewOpened = true" *ngFor="let user of users">
+    <tr (click)="activeUser = user; isUserViewOpened = true; serverErrors = null;" *ngFor="let user of users">
       <td>
         {{ user.username }}
       </td>
@@ -44,4 +44,4 @@
   </table>
 </div>
 
-<app-user-view *ngIf="isUserViewOpened" [users]="users" [activeUser]="activeUser" (save)="saveUser($event)" (delete)="deleteUser($event)" (close)="isUserViewOpened = false" (add)="addUser($event)"></app-user-view>
+<app-user-view *ngIf="isUserViewOpened" [serverErrors]="serverErrors" [users]="users" [activeUser]="activeUser" (save)="saveUser($event)" (delete)="deleteUser($event)" (close)="isUserViewOpened = false" (add)="addUser($event)"></app-user-view>
